@@ -5,12 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 public class Main {
     public static void main(String[] args) {
         List<Employee> employees = new ArrayList<>();
@@ -101,12 +95,14 @@ List<Employee> salaryManager = employees.stream()
         System.out.println(employeeWithMinSalary);
 
 //        7. Получите сотрудников из всех отделов с максимальной зп
-       //  а) Нахождение максимальной зарплаты в каждом отделе
+        
+       //  а) Находим максимальную зарплату в каждом отделе
         Map<String, Double> maxSalary = employees.stream()
                 .collect(Collectors.groupingBy(Employee::getPosition,
                         Collectors.mapping(Employee::getSalary, Collectors.collectingAndThen(
                                 Collectors.maxBy(Double::compare), max -> max.orElse(0.0)))));
-        // b) Нахождение сотрудников с максимальной зарплатой в каждом отделе
+        
+        // b) Находим сотрудников с максимальной зарплатой в каждом отделе
         List<Employee> employeesWithMaxSalary = employees.stream()
                 .filter(employee -> employee.getSalary() == maxSalary.get(employee.getPosition()))
                 .collect(Collectors.toList());
